@@ -9,7 +9,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         // target: "http://localhost:3001",
-        target: "https://full-stack-chat-app-nwx3.vercel.app/",
+        target: "https://chidyaghar-backend.onrender.com",
         changeOrigin: true,
       },
     },
