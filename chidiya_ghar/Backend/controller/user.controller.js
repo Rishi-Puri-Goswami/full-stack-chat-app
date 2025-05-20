@@ -78,3 +78,7 @@ export const allUsers = async (req, res) => {
     console.log("Error in allUsers Controller: " + error);
   }
 };
+
+export const test = async (req, res) => {
+  res.status(200).json({ message: "this is a test" });
+};
