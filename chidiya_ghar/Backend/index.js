@@ -28,7 +28,12 @@ try {
 //routes
 app.use("/api/user", userRoute);
 app.use("/api/message", messageRoute);
+app.get('/' , (req , res )=>{
 
+  res.send("chatapp backend")
+
+
+})
 server.listen(PORT, () => {
   console.log(`Server is Running on port ${PORT}`);
 });
