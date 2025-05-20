@@ -33,7 +33,7 @@ app.get('/' , (req , res )=>{
   res.send("chatapp backend")
 })
 
-app.get('/bhai/test' , (req , res )=>{ res.send(200).json({message:"test"})})
+app.get('/bhai/test' , (req , res )=>{ res.send("hello bhai")})
 
 server.listen(PORT, () => {
   console.log(`Server is Running on port ${PORT}`);
