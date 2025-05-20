@@ -1,0 +1,4 @@
+[build]
+  base = "chidiya_ghar/Frontend"
+  publish = "dist"
+  command = "npm run build"
