@@ -28,9 +28,9 @@ try {
 //routes
 app.use("/api/user", userRoute);
 app.use("/api/message", messageRoute);
-app.get('/' , (req , res )=>{
+app.get('/bhai' , (req , res )=>{
 
-  res.send("chatapp backend")
+  res.send("chatapp")
 })
 
 app.get('/bhai/test' , (req , res )=>{ res.send("hello bhai")})
