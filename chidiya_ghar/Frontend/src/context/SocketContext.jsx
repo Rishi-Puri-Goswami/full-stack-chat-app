@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
 import { useAuth } from "./AuthProvider";
 import io from "socket.io-client";
-const socketContext = createContext();
 
-// it is a hook.
+const SocketContext = createContext();
+
 export const useSocketContext = () => {
-  return useContext(socketContext);
+  return useContext(SocketContext);
 };
 
 export const SocketProvider = ({ children }) => {
@@ -13,29 +13,43 @@ export const SocketProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [authUser] = useAuth();
 
+  
+  const socketRef = useRef(null);
+
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://chidyaghar-backend.onrender.com", {
-        query: {
-          userId: authUser.user._id,
-        },
-        withCredentials: true
-      });
-      setSocket(socket);
-      socket.on("getOnlineUsers", (users) => {
-        setOnlineUsers(users);
-      });
-      return () => socket.close();
-    } else {
-      if (socket) {
-        socket.close();
-        setSocket(null);
+      if (!socketRef.current) {
+        const newSocket = io("https://chidyaghar-backend.onrender.com", {
+          query: {
+            userId: authUser.user._id,
+          },
+          withCredentials: true,
+          transports: ["websocket"], 
+        });
+
+        socketRef.current = newSocket;
+        setSocket(newSocket);
+
+        newSocket.on("getOnlineUsers", (users) => {
+          setOnlineUsers(users);
+        });
       }
     }
+
+    
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+        setSocket(null);
+        setOnlineUsers([]);
+      }
+    };
   }, [authUser]);
+
   return (
-    <socketContext.Provider value={{ socket, onlineUsers }}>
+    <SocketContext.Provider value={{ socket, onlineUsers }}>
       {children}
-    </socketContext.Provider>
+    </SocketContext.Provider>
   );
 };
