@@ -21,7 +21,9 @@ function Login() {
     };
     // console.log(userInfo);
     axios
-      .post("https://chidyaghar-backend.onrender.com/api/user/login", userInfo)
+      .post("https://chidyaghar-backend.onrender.com/api/user/login", userInfo ,{
+    withCredentials: true
+  })
       .then((response) => {
         if (response.data) {
           toast.success("Login successful");
