@@ -10,8 +10,10 @@ function Logout() {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("https://chidyaghar-backend.onrender.com/api/user/logout" , {
-    withCredentials: true
+      const res = await axios.post("https://chidyaghar-backend.onrender.com/api/user/logout" ,
+  {}, 
+  {
+    withCredentials: true 
   });
       localStorage.removeItem("ChatApp");
       Cookies.remove("jwt");
